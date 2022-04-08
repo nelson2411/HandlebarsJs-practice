@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"
+    ></script>
+
+    <title>page-two</title>
+    <style type="text/css">
+      .redText {
+        color: red;
+      }
+      .blueText {
+        color: blue;
+      }
+      .greenText {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="quoteData"></div>
+
+    <script id="quote-template" type="text/x-handlebars-template">
+      <h3>Frases favoritas de mi {{name}}</h3>
+      <ol>
+        {{#each quotes}}
+          <li>{{quote}}</li>
+        {{/each}}
+      </ol>
+
+      {{{suegraBio}}}<br /><br /><br />
+      {{makeLink "Suegra" "https://www.facebook.com/azucena.demelgar"}}<br />
+      {{changeColor "Make my text red" color="blue"}}<br />
+      {{sayHello}}
+    </script>
+    <script type="text/javascript">
+      var quoteInfo = document.getElementById("quote-template").innerHTML;
+      var template = Handlebars.compile(quoteInfo);
+      Handlebars.registerHelper("makeLink", function (text, url) {
+        text = Handlebars.Utils.escapeExpression(text);
+        url = Handlebars.Utils.escapeExpression(url);
+        const theLink = '<a href="' + url + '">' + text + "</a>";
+
+        return new Handlebars.SafeString(theLink);
+      });
+
+      Handlebars.registerHelper("changeColor", function (text, options) {
+        text = Handlebars.Utils.escapeExpression(text);
+        if (options.hash.color === "red") {
+          return new Handlebars.SafeString(
+            "<span class='redText'>" + text + "</span>"
+          );
+        } else if (options.hash.color === "blue") {
+          return new Handlebars.SafeString(
+            '<span class="blueText">' + text + "</span>"
+          );
+        } else {
+          return new Handlebars.SafeString(
+            '<span class="greenText">' + text + "</span>"
+          );
+        }
+      });
+      Handlebars.registerHelper("sayHello", function (options) {
+        switch (options.data.lang) {
+          case "spanish":
+            return "Hola";
+            break;
+          case "french":
+            return "Bonjour";
+            break;
+          default:
+            return "Hello";
+        }
+      });
+
+      var quoteData = template(
+        {
+          name: "Mi suegra",
+          quotes: [
+            {
+              quote:
+                "Cuando una ventana esta abierta en una casa ajena, no hay que ver para adentro.",
+            },
+            {
+              quote:
+                "antes de entrar a la casa hay que ver si lo vienen siguiendo a uno",
+            },
+            {
+              quote:
+                "cuando en la calle hablan de uno, no hay que decir nada si es cierto",
+            },
+          ],
+          suegraBio:
+            "<i>Mi suegra nacio en el municipio de La Union hace 60 años</i>",
+        },
+        {
+          data: {
+            lang: "french",
+          },
+        }
+      );
+
+      document.getElementById("quoteData").innerHTML += quoteData;
+    </script>
+  </body>
+</html>

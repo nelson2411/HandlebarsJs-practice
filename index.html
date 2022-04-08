@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"
+    ></script>
+    <title>handlebarsJs practice</title>
+  </head>
+  <body>
+    <div id="derekData"></div>
+
+    <script type="text/javascript">
+      const myInfo =
+        "<p>My name is {{name}}. I am {{age}} years old. I live in {{city}}. I am a {{occupation}}.</p>";
+
+      const template = Handlebars.compile(myInfo);
+      const data = template({
+        name: "Nelson",
+        age: "38",
+        city: "kallhäll",
+        occupation: "Web Developer",
+      });
+      document.getElementById("derekData").innerHTML += data;
+    </script>
+  </body>
+</html>

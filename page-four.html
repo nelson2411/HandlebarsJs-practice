@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"
+    ></script>
+
+    <title>Page - IV</title>
+  </head>
+  <body>
+    <div id="contentDiv"></div>
+
+    <script id="the-template" type="text/x-handlers-template">
+      <div class="potter-1" >
+      <h3>{{title}}</h3>
+      {{#with techData}}
+        <div class="isbn">
+          {{isbn}}
+        </div>
+        <div class="author">
+        {{author}}
+        </div>
+      {{/with}}
+      </div>
+    </script>
+    <script type="text/javascript">
+      var templateInfo = document.getElementById("the-template").innerHTML;
+
+      //Compile the template
+      const template = Handlebars.compile(templateInfo);
+      Handlebars.registerHelper("with", function (context, options) {
+        return options.fn(context);
+      });
+      var templateData = template({
+        title: "Harry Potter and the philosopher's stone",
+        techData: {
+          isbn: "0-7475-3269-9",
+          author: "J. K. Rowling",
+        },
+      });
+      document.getElementById("contentDiv").innerHTML = templateData;
+    </script>
+  </body>
+</html>
