@@ -11,5 +11,55 @@
 
     <title>Page-Five</title>
   </head>
-  <body></body>
+  <body>
+    <div id="contentDiv"></div>
+    <script id="the-template" type="text/x-handlebars-template">
+      <h4>{{> myName}}</h4>
+      <h5>{{> myAuthor }}</h5>
+
+      <div class="post">
+        {{> askQuestion tagName="h2"}}
+        <h4>Suggestions</h4>
+        {{#each comments}}
+        {{> askQuestion tagName="h3"}}
+        {{/each}}
+
+      </div>
+    </script>
+
+    <script>
+      var templateInfo = document.getElementById("the-template").innerHTML;
+
+      var template = Handlebars.compile(templateInfo);
+
+      Handlebars.registerPartial("myName", "{{name}}");
+      Handlebars.registerPartial("myAuthor", "{{author}}");
+      Handlebars.registerPartial(
+        "askQuestion",
+        "<{{tagName}}>{{author}}</tagName>" +
+          '<div class="comment">{{comment}}</div>'
+      );
+
+      var templateData = template({
+        name: "Nelson",
+        author: "Nelson Rosales",
+        comment: "Where should we vacation?",
+        comments: [
+          {
+            author: "Alba Melgar",
+            comment: "The Beach",
+          },
+          {
+            author: "Cuajito Rosales",
+            comment: "The Mountains",
+          },
+          {
+            author: "Oswaldo Melgar",
+            comment: "el Tunco",
+          },
+        ],
+      });
+      document.getElementById("contentDiv").innerHTML += templateData;
+    </script>
+  </body>
 </html>

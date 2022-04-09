@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"
+    ></script>
+    <title>Page-six</title>
+  </head>
+  <body>
+    <div id="contentDiv"></div>
+
+    <script id="grocery-template" type="text/x-handlebars-template">
+      {{#each groceries}}
+        <div class="grocery-item">
+          <p>Item: {{this.item}}</p>
+          <p>Price: {{this.price}}</p>
+        </div>
+      {{/each}}
+    </script>
+    <script type="text/javascript">
+      var templateInfo = document.getElementById("grocery-template").innerHTML;
+      var template = Handlebars.compile(templateInfo);
+      var context = {
+        groceries: [
+          { item: "Potato", price: 28 },
+          { item: "Tomato", price: 12 },
+          { item: "Onion", price: 45 },
+          { item: "Onion", price: 20 },
+          { item: "Beers", price: 10 },
+          { item: "Chips", price: 24 },
+          { item: "Beans", price: 28 },
+        ],
+      };
+      var templateData = template(context);
+      document.getElementById("contentDiv").innerHTML = templateData;
+    </script>
+  </body>
+</html>
